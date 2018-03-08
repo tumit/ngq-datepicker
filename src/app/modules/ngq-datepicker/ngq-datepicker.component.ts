@@ -3,7 +3,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import 'bootstrap-datepicker';
 
 const BASE_OPTION = { autoclose: true, format: 'dd/mm/yyyy' };
-const THAI_OPTION = { ...BASE_OPTION, language: 'th', thaiyear: true };
+const THAI_OPTION = { ...BASE_OPTION, language: 'th-TH' };
 
 const NGQ_DATETIME_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -18,10 +18,10 @@ const NGQ_DATETIME_VALUE_ACCESSOR: any = {
   providers: [NGQ_DATETIME_VALUE_ACCESSOR]
 })
 export class NgqDatepickerComponent implements ControlValueAccessor, AfterViewInit {
-  @Input() tabindex: string;
-
-  @Input() inputId: string;
-  @Input() inputClass: string;
+  @Input() hideIcon: false;
+  @Input() id: string;
+  @Input() class: string;
+  @Input() placeholder: string;
 
   @ViewChild('input') input;
 
@@ -34,13 +34,12 @@ export class NgqDatepickerComponent implements ControlValueAccessor, AfterViewIn
   propagateChange = _ => {};
   @HostListener('blur') onTouched = () => {};
 
-  @HostBinding('attr.tabindex')
-  get tabindexAttr(): string | undefined {
-    return this.tabindex === undefined ? '-1' : undefined;
-  }
-
   ngAfterViewInit() {
     this._datepicker = jQuery(this.input.nativeElement).datepicker(THAI_OPTION);
+    this._datepicker.datepicker().on('changeDate', (e: any) => {
+      this._date = e.date;
+      this.propagateChange(this._date);
+    });
     this._datepicker.datepicker('update', this._date);
     this._datepicker.prop('disabled', this._isDisabled);
   }

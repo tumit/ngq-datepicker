@@ -1,6 +1,8 @@
-<div class="input-group">
-  <input #input type="text" [ngClass]="inputClass" [id]="inputId">
+<div *ngIf="!hideIcon" class="input-group">
+  <input #input type="text" [attr.class]="class" [attr.id]="id" [attr.placeholder]="placeholder">
   <div class="input-group-addon" (click)="this._datepicker.datepicker('show')">
-    <span class="glyphicon glyphicon-th"></span>
+    <span class="glyphicon glyphicon-calendar"></span>
   </div>
 </div>
+
+<input *ngIf="hideIcon" #input type="text" [attr.class]="class" [attr.id]="id" [attr.placeholder]="placeholder">

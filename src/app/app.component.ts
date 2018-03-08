@@ -11,9 +11,9 @@ export class AppComponent implements OnInit {
   fg: FormGroup;
 
   ngOnInit() {
-    const today = new Date(1981, 4, 2);
+    const myDate = new Date(1981, 4, 2);
     this.fg = new FormGroup({
-      birthDate: new FormControl(today)
+      birthDate: new FormControl(myDate)
     });
   }
 }
