@@ -1,6 +1,6 @@
 {
   "name": "ngq-datepicker",
-  "version": "0.0.0-alpha.2",
+  "version": "0.0.0-alpha.3",
   "description": "Bootstrap datetime picker for Angular",
   "license": "MIT",
   "keywords": ["angular", "jquery", "bootstrap", "date", "picker"],
@@ -31,6 +31,7 @@
     "@angular/router": "^5.2.0",
     "@types/bootstrap-datepicker": "0.0.12",
     "@types/jquery": "^1.10.34",
+    "bootstrap": "^3.0.0",
     "bootstrap-datepicker": "^1.7.1",
     "core-js": "^2.4.1",
     "jquery": "^3.3.1",

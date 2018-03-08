@@ -1,1 +1,6 @@
-<input #input type="text">
+<div class="input-group">
+  <input #input type="text" [ngClass]="inputClass" [id]="inputId">
+  <div class="input-group-addon" (click)="this._datepicker.datepicker('show')">
+    <span class="glyphicon glyphicon-th"></span>
+  </div>
+</div>
