@@ -26,12 +26,13 @@
       <div class="form-group">
         <label for="birthDate" class="col-sm-2 control-label">Birth Date</label>
         <div class="col-sm-4">
-          <ngq-datepicker [id]="'birthDate'" [class]="'form-control'" [placeholder]="'Birth Date'" formControlName="birthDate"></ngq-datepicker>
+          <ngq-datepicker formControlName="dateFrom" [opts]="opts"></ngq-datepicker>
+          <ngq-datepicker formControlName="dateTo" [opts]="opts"></ngq-datepicker>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-          <button type="submit" class="btn btn-default">Sign in</button>
+          <button type="submit" class="btn btn-default" (click)="changeLang()">Sign in</button>
         </div>
       </div>
     </form>
@@ -39,4 +40,5 @@
   </div>
 </div>
 <br> FormGroup: {{ fg.value | json }}
-<br> Birth Date in long format: {{ fg.get('birthDate').value | date :'long'}}
+<br> Birth Date in long format: {{ fg.get('dateFrom').value | date :'long'}}
+<br> Birth Date in long format: {{ fg.get('dateTo').value | date :'long'}}
