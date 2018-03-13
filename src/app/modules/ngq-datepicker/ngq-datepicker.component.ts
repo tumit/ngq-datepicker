@@ -68,7 +68,6 @@ export class NgqDatepickerComponent implements ControlValueAccessor, AfterViewIn
     if (this.input) {
       this._datepicker = jQuery(this.input.nativeElement).datepicker(this._datePickerOptions);
       this._datepicker.datepicker().on('changeDate', (e: any) => {
-        console.log('changeDate e.date', e.date);
         this._date = e.date;
         this.propagateChange(this._date);
       });
