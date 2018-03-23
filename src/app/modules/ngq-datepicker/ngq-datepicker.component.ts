@@ -1,15 +1,14 @@
+import 'bootstrap-datepicker';
+
 import {
   AfterViewInit,
   Component,
   forwardRef,
-  HostBinding,
   HostListener,
   Input,
-  ViewChild,
-  ElementRef
+  ViewChild
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import 'bootstrap-datepicker';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export const BASE_OPTION = {
   autoclose: true,
@@ -53,7 +52,9 @@ export class NgqDatepickerComponent
     this._opts = opts;
     if (this._jQueryElement) {
       this._jQueryElement.datepicker('destroy');
-      const newVal = !!this._value ? new Intl.DateTimeFormat(this._opts.language).format(this._value) : '';
+      const newVal = !!this._value
+        ? new Intl.DateTimeFormat(this._opts.language).format(this._value)
+        : '';
       this._jQueryElement.val(newVal);
       this.initDatepicker();
     }
@@ -62,11 +63,10 @@ export class NgqDatepickerComponent
   ngAfterViewInit() {
     this._jQueryElement = jQuery(this.input.nativeElement);
     this.initDatepicker();
-
   }
 
   private initDatepicker() {
-    this._opts = (this._opts) ? this._opts : th_TH;
+    this._opts = this._opts ? this._opts : th_TH;
     this._jQueryElement.datepicker(this._opts);
     this._jQueryElement.datepicker().on('changeDate', (e: any) => {
       this._value = e.date;
@@ -82,8 +82,10 @@ export class NgqDatepickerComponent
       this._value = null;
       this.propagateChange(this._value);
     } else {
-      jQuery(this.input.nativeElement).datepicker('destroy');
-      this.initDatepicker();
+      if (this._jQueryElement) {
+        this._jQueryElement.datepicker('destroy');
+        this.initDatepicker();
+      }
     }
   }
 
@@ -93,6 +95,9 @@ export class NgqDatepickerComponent
 
   writeValue(obj: any): void {
     this._value = obj;
+    if (this._jQueryElement) {
+      this._jQueryElement.val(this._value);
+    }
   }
 
   registerOnChange(fn: any): void {
@@ -103,5 +108,8 @@ export class NgqDatepickerComponent
 
   setDisabledState?(isDisabled: boolean): void {
     this._isDisabled = isDisabled;
+    if (this._jQueryElement) {
+      this._jQueryElement.prop('disabled', this._isDisabled);
+    }
   }
 }

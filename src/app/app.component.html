@@ -33,12 +33,15 @@
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
           <button type="submit" class="btn btn-default" (click)="changeLang()">Sign in</button>
+          <button (click)="toggleEnableDisable()">Enable / Disable</button>
+          <button (click)="reset()">Reset</button>
         </div>
       </div>
     </form>
 
   </div>
 </div>
-<br> FormGroup: {{ fg.value | json }}
+<br> FormGroup: Value {{ fg.value | json }}
+<br> FormGroup: Raw Value {{ fg.getRawValue() | json }}
 <br> Birth Date in long format: {{ fg.get('dateFrom').value | date :'long'}}
 <br> Birth Date in long format: {{ fg.get('dateTo').value | date :'long'}}
