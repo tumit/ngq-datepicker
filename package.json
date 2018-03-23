@@ -3,7 +3,13 @@
   "version": "0.0.5",
   "description": "Bootstrap datetime picker for Angular",
   "license": "MIT",
-  "keywords": ["angular", "jquery", "bootstrap", "date", "picker"],
+  "keywords": [
+    "angular",
+    "jquery",
+    "bootstrap",
+    "date",
+    "picker"
+  ],
   "author": "tumit <tumit@live.com> (https://medium.com/@tumit)",
   "repository": {
     "type": "git",
@@ -45,6 +51,7 @@
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
+    "bootstrap-datepicker-year-offset": "^1.0.3",
     "codelyzer": "^4.0.1",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.1",
