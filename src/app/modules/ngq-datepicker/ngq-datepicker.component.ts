@@ -26,10 +26,10 @@ export class NgqDatepickerComponent implements ControlValueAccessor, AfterViewIn
   _date: Date;
   _isDisabled: boolean;
 
-  constructor() {}
+  constructor() { }
 
-  propagateChange = _ => {};
-  @HostListener('blur') onTouched = () => {};
+  propagateChange = _ => { };
+  @HostListener('blur') onTouched = () => { };
 
   @HostBinding('attr.tabindex')
   get tabindexAttr(): string | undefined {
@@ -45,17 +45,19 @@ export class NgqDatepickerComponent implements ControlValueAccessor, AfterViewIn
         this.propagateChange(this._date);
       });
     jQuery(this.input.nativeElement).datepicker('update', this._date);
-    jQuery(this.input.nativeElement).prop('disabled', this._isDisabled);
   }
 
   writeValue(obj: any): void {
     this._date = obj;
+    jQuery(this.input.nativeElement).val(obj);
   }
   registerOnChange(fn: any): void {
     this.propagateChange = fn;
   }
-  registerOnTouched(fn: any): void {}
+
+  registerOnTouched(fn: any): void { }
+
   setDisabledState?(isDisabled: boolean): void {
-    this._isDisabled = isDisabled;
+    jQuery(this.input.nativeElement).prop('disabled', isDisabled);
   }
 }

@@ -1,4 +1,5 @@
 <form [formGroup]="fg">
   <ngq-datepicker formControlName="dateFrom"></ngq-datepicker>
+  <button (click)="reset()"></button>
 </form>
 {{ fg.value | json }} {{ fg.get('dateFrom').value | date :'short'}}

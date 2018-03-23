@@ -13,7 +13,12 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     const today = new Date(1981, 4, 2);
     this.fg = new FormGroup({
-      dateFrom: new FormControl(today)
+      dateFrom: new FormControl({value: today, disabled: true})
     });
+  }
+
+  reset() {
+    this.fg.reset();
+    this.fg.get('dateFrom').enable();
   }
 }
