@@ -24,7 +24,6 @@ export class NgqDatepickerComponent implements ControlValueAccessor, AfterViewIn
 
   _datepicker: any;
   _date: Date;
-  _isDisabled: boolean;
 
   constructor() { }
 
