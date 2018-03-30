@@ -37,7 +37,11 @@ export class AppComponent implements OnInit {
       : this.dateFrom.enable();
   }
 
+  update() {
+    this.fg.get('dateTo').setValue(new Date());
+  }
+
   reset() {
-    this.dateFrom.reset();
+    this.fg.reset();
   }
 }

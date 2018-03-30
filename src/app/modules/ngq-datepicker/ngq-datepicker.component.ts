@@ -96,7 +96,7 @@ export class NgqDatepickerComponent
   writeValue(obj: any): void {
     this._value = obj;
     if (this._jQueryElement) {
-      this._jQueryElement.val(this._value);
+      this._jQueryElement.datepicker('update', this._value);
     }
   }
 
