@@ -38,14 +38,14 @@ export class NgqDatepickerComponent
   @Input() placeholder: string;
 
   @ViewChild('input') input;
-    
+
   _jQueryElement: JQuery;
   _value: number;
   _isDisabled: boolean;
   _opts: DatepickerOptions;
 
   constructor() { }
-   
+
   // should re-initial datepicker when assign new options
   @Input('opts')
   set opts(opts: DatepickerOptions) {
