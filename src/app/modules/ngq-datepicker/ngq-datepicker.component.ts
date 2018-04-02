@@ -1,9 +1,22 @@
-import { AfterViewInit, Component, forwardRef, HostBinding, HostListener, Input, ViewChild } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import 'bootstrap-datepicker';
 
-const BASE_OPTION = { autoclose: true, format: 'dd/mm/yyyy' };
-const THAI_OPTION = { ...BASE_OPTION, thaiyear: true };
+import {
+  AfterViewInit,
+  Component,
+  forwardRef,
+  HostListener,
+  Input,
+  ViewChild
+} from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+
+export const BASE_OPTION = {
+  autoclose: true,
+  format: 'dd/mm/yyyy',
+  language: 'en-GB'
+} as DatepickerOptions;
+export const th_TH = { ...BASE_OPTION, language: 'th-TH' } as DatepickerOptions;
+export const en_GB = { ...BASE_OPTION, language: 'en-GB' } as DatepickerOptions;
 
 const NGQ_DATETIME_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -17,46 +30,84 @@ const NGQ_DATETIME_VALUE_ACCESSOR: any = {
   styleUrls: ['./ngq-datepicker.component.css'],
   providers: [NGQ_DATETIME_VALUE_ACCESSOR]
 })
-export class NgqDatepickerComponent implements ControlValueAccessor, AfterViewInit {
-  @Input() tabindex: string;
+export class NgqDatepickerComponent
+  implements ControlValueAccessor, AfterViewInit {
+  @Input() hideIcon: false;
+  @Input() id: string;
+  @Input() class: string;
+  @Input() placeholder: string;
 
   @ViewChild('input') input;
-
-  _datepicker: any;
-  _date: Date;
+    
+  _jQueryElement: JQuery;
+  _value: number;
+  _isDisabled: boolean;
+  _opts: DatepickerOptions;
 
   constructor() { }
-
-  propagateChange = _ => { };
-  @HostListener('blur') onTouched = () => { };
-
-  @HostBinding('attr.tabindex')
-  get tabindexAttr(): string | undefined {
-    return this.tabindex === undefined ? '-1' : undefined;
+   
+  // should re-initial datepicker when assign new options
+  @Input('opts')
+  set opts(opts: DatepickerOptions) {
+    this._opts = opts;
+    if (this._jQueryElement) {
+      this._jQueryElement.datepicker('destroy');
+      const newVal = !!this._value
+        ? new Intl.DateTimeFormat(this._opts.language).format(this._value)
+        : '';
+      this._jQueryElement.val(newVal);
+      this.initDatepicker();
+    }
   }
 
   ngAfterViewInit() {
-    jQuery(this.input.nativeElement).datepicker(THAI_OPTION);
-    jQuery(this.input.nativeElement)
-      .datepicker()
-      .on('changeDate', (e: any) => {
-        this._date = e.date;
-        this.propagateChange(this._date);
-      });
-    jQuery(this.input.nativeElement).datepicker('update', this._date);
+    this._jQueryElement = jQuery(this.input.nativeElement);
+    this.initDatepicker();
   }
 
-  writeValue(obj: any): void {
-    this._date = obj;
-    jQuery(this.input.nativeElement).val(obj);
+  private initDatepicker() {
+    this._opts = this._opts ? this._opts : th_TH;
+    this._jQueryElement.datepicker(this._opts);
+    this._jQueryElement.datepicker().on('changeDate', (e: any) => {
+      this._value = e.date;
+      this.propagateChange(this._value);
+    });
+
+    this._jQueryElement.datepicker('update', this._value);
+    this._jQueryElement.prop('disabled', this._isDisabled);
   }
+
+  onChange(value: string) {
+    if (!value) {
+      this._value = null;
+      this.propagateChange(this._value);
+    } else {
+      if (this._jQueryElement) {
+        this._jQueryElement.datepicker('destroy');
+        this.initDatepicker();
+      }
+    }
+  }
+
+  propagateChange = _ => {};
+
+  writeValue(obj: any): void {
+    this._value = obj;
+    if (this._jQueryElement) {
+      this._jQueryElement.datepicker('update', this._value);
+    }
+  }
+
   registerOnChange(fn: any): void {
     this.propagateChange = fn;
   }
 
-  registerOnTouched(fn: any): void { }
+  registerOnTouched(fn: any): void {}
 
   setDisabledState?(isDisabled: boolean): void {
-    jQuery(this.input.nativeElement).prop('disabled', isDisabled);
+    this._isDisabled = isDisabled;
+    if (this._jQueryElement) {
+      this._jQueryElement.prop('disabled', this._isDisabled);
+    }
   }
 }
