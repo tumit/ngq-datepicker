@@ -10,16 +10,17 @@ import { NgqDatepickerComponent, th_TH, en_GB } from './modules/ngq-datepicker/n
 export class AppComponent implements OnInit {
   title = 'ngq';
   fg: FormGroup;
-  dateFrom = new FormControl({ value: '', disabled: true});
-  dateTo = new FormControl();
+  date1 = new FormControl({ value: '1533229200000', disabled: true});
+  date2 = new FormControl(new Date());
+  date3 = new FormControl();
 
   opts = th_TH;
 
   ngOnInit() {
-    const myDate = new Date(1981, 4, 2);
     this.fg = new FormGroup({
-      dateFrom: this.dateFrom,
-      dateTo: this.dateTo
+      date1: this.date1,
+      date2: this.date2,
+      date3: this.date3
     });
   }
 
@@ -32,13 +33,15 @@ export class AppComponent implements OnInit {
   }
 
   toggleEnableDisable() {
-    (this.dateFrom.enabled)
-      ? this.dateFrom.disable()
-      : this.dateFrom.enable();
+    (this.date1.enabled)
+      ? this.date1.disable()
+      : this.date1.enable();
   }
 
   update() {
-    this.fg.get('dateTo').setValue(new Date());
+    this.fg.get('date1').setValue(new Date());
+    this.fg.get('date2').setValue('');
+    this.fg.get('date3').setValue('1533229200000');
   }
 
   reset() {

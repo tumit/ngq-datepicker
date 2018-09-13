@@ -73,7 +73,7 @@ export class NgqDatepickerComponent
       this.propagateChange(this._value);
     });
 
-    this._jQueryElement.datepicker('update', this._value);
+    this._jQueryElement.datepicker('update', this._value ? new Date(Number(this._value)) : null);
     this._jQueryElement.prop('disabled', this._isDisabled);
   }
 
@@ -94,7 +94,7 @@ export class NgqDatepickerComponent
   writeValue(obj: any): void {
     this._value = obj;
     if (this._jQueryElement) {
-      this._jQueryElement.datepicker('update', this._value);
+      this._jQueryElement.datepicker('update', this._value ? new Date(Number(this._value)) : null);
     }
   }
 
