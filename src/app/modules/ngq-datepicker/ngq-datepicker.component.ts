@@ -89,7 +89,7 @@ export class NgqDatepickerComponent
     }
   }
 
-  propagateChange = _ => {};
+  propagateChange = _ => { };
 
   writeValue(obj: any): void {
     this._value = obj;
@@ -102,7 +102,7 @@ export class NgqDatepickerComponent
     this.propagateChange = fn;
   }
 
-  registerOnTouched(fn: any): void {}
+  registerOnTouched(fn: any): void { }
 
   setDisabledState?(isDisabled: boolean): void {
     this._isDisabled = isDisabled;

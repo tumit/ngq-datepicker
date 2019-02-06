@@ -10,7 +10,7 @@ import { NgqDatepickerComponent, th_TH, en_GB } from './modules/ngq-datepicker/n
 export class AppComponent implements OnInit {
   title = 'ngq';
   fg: FormGroup;
-  date1 = new FormControl({ value: '1533229200000', disabled: true});
+  date1 = new FormControl({ value: '1533229200000', disabled: true });
   date2 = new FormControl(new Date());
   date3 = new FormControl();
 
@@ -22,6 +22,9 @@ export class AppComponent implements OnInit {
       date2: this.date2,
       date3: this.date3
     });
+
+    this.date3.valueChanges.subscribe(v => console.log(v));
+
   }
 
   changeLang() {
