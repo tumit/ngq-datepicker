@@ -37,7 +37,7 @@ export class NgqDatepickerComponent
   @Input() class: string;
   @Input() placeholder: string;
 
-  @ViewChild('input') input;
+  @ViewChild('input', {static: false}) input;
 
   _jQueryElement: JQuery;
   _value: number;
