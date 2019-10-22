@@ -1,7 +1,9 @@
 <div *ngIf="!hideIcon" class="input-group">
   <input #input type="text" [attr.class]="class" [attr.id]="id" [attr.placeholder]="placeholder" (change)="onChange($event.target.value)">
-  <div class="input-group-addon" (click)="_jQueryElement.datepicker('show')">
-    <span class="glyphicon glyphicon-calendar"></span>
+  <div class="input-group-append" (click)="_jQueryElement.datepicker('show')">
+    <a class="input-group-text">
+      <i class="fas fa-calendar-alt"></i>
+    </a>
   </div>
 </div>
 
