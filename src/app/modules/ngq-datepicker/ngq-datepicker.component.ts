@@ -1,34 +1,33 @@
-import 'bootstrap-datepicker';
+import "bootstrap-datepicker";
 
 import {
   AfterViewInit,
   Component,
   forwardRef,
-  HostListener,
   Input,
-  ViewChild
-} from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+  ViewChild,
+} from "@angular/core";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 export const BASE_OPTION = {
   autoclose: true,
-  format: 'dd/mm/yyyy',
-  language: 'en-GB'
+  format: "dd/mm/yyyy",
+  language: "en-GB",
 } as DatepickerOptions;
-export const th_TH = { ...BASE_OPTION, language: 'th-TH' } as DatepickerOptions;
-export const en_GB = { ...BASE_OPTION, language: 'en-GB' } as DatepickerOptions;
+export const th_TH = { ...BASE_OPTION, language: "th-TH" } as DatepickerOptions;
+export const en_GB = { ...BASE_OPTION, language: "en-GB" } as DatepickerOptions;
 
 const NGQ_DATETIME_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => NgqDatepickerComponent),
-  multi: true
+  multi: true,
 };
 
 @Component({
-  selector: 'ngq-datepicker',
-  templateUrl: './ngq-datepicker.component.html',
-  styleUrls: ['./ngq-datepicker.component.css'],
-  providers: [NGQ_DATETIME_VALUE_ACCESSOR]
+  selector: "ngq-datepicker",
+  templateUrl: "./ngq-datepicker.component.html",
+  styleUrls: ["./ngq-datepicker.component.css"],
+  providers: [NGQ_DATETIME_VALUE_ACCESSOR],
 })
 export class NgqDatepickerComponent
   implements ControlValueAccessor, AfterViewInit {
@@ -37,24 +36,24 @@ export class NgqDatepickerComponent
   @Input() class: string;
   @Input() placeholder: string;
 
-  @ViewChild('input', {static: false}) input;
+  @ViewChild("input", { static: false }) input;
 
   _jQueryElement: JQuery;
   _value: number;
   _isDisabled: boolean;
   _opts: DatepickerOptions;
 
-  constructor() { }
+  constructor() {}
 
   // should re-initial datepicker when assign new options
-  @Input('opts')
+  @Input("opts")
   set opts(opts: DatepickerOptions) {
     this._opts = opts;
     if (this._jQueryElement) {
-      this._jQueryElement.datepicker('destroy');
+      this._jQueryElement.datepicker("destroy");
       const newVal = !!this._value
         ? new Intl.DateTimeFormat(this._opts.language).format(this._value)
-        : '';
+        : "";
       this._jQueryElement.val(newVal);
       this.initDatepicker();
     }
@@ -68,13 +67,16 @@ export class NgqDatepickerComponent
   private initDatepicker() {
     this._opts = this._opts ? this._opts : th_TH;
     this._jQueryElement.datepicker(this._opts);
-    this._jQueryElement.datepicker().on('changeDate', (e: any) => {
+    this._jQueryElement.datepicker().on("changeDate", (e: any) => {
       this._value = e.date;
       this.propagateChange(this._value);
     });
 
-    this._jQueryElement.datepicker('update', this._value ? new Date(Number(this._value)) : null);
-    this._jQueryElement.prop('disabled', this._isDisabled);
+    this._jQueryElement.datepicker(
+      "update",
+      this._value ? new Date(Number(this._value)) : null
+    );
+    this._jQueryElement.prop("disabled", this._isDisabled);
   }
 
   onChange(value: string) {
@@ -83,18 +85,22 @@ export class NgqDatepickerComponent
       this.propagateChange(this._value);
     } else {
       if (this._jQueryElement) {
-        this._jQueryElement.datepicker('destroy');
+        this._jQueryElement.datepicker("destroy");
         this.initDatepicker();
       }
     }
   }
 
-  propagateChange = _ => {};
+  propagateChange = (_) => {};
 
   writeValue(obj: any): void {
     this._value = obj;
     if (this._jQueryElement) {
-      this._jQueryElement.datepicker('update', this._value ? new Date(Number(this._value)) : null);
+      console.log(this._value);
+      this._jQueryElement.datepicker(
+        "update",
+        this._value ? new Date(Number(this._value)) : null
+      );
     }
   }
 
@@ -107,7 +113,7 @@ export class NgqDatepickerComponent
   setDisabledState?(isDisabled: boolean): void {
     this._isDisabled = isDisabled;
     if (this._jQueryElement) {
-      this._jQueryElement.prop('disabled', this._isDisabled);
+      this._jQueryElement.prop("disabled", this._isDisabled);
     }
   }
 }
